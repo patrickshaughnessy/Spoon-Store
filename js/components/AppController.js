@@ -3,13 +3,14 @@ import React from "react";
 import Relay from 'react-relay';
 
 import Item from './Item';
-import Purchase from './Purchase';
+import ShoppingCart from './ShoppingCart';
 
 class AppController extends React.Component{
   render(){
     return(
       <div className="app">
         <h1>Hello World!</h1>
+        <ShoppingCart />
         {this.props.store.spoons.edges.map(spoon => {
           return <Item key={spoon.node._id} spoon={spoon.node} />
         })}

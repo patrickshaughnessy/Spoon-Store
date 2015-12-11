@@ -2,6 +2,7 @@ import React from "react";
 import Relay from 'react-relay';
 
 import Purchase from './Purchase';
+import AddToCart from './AddToCart';
 
 class Item extends React.Component{
   render(){
@@ -14,6 +15,7 @@ class Item extends React.Component{
         <h3>Mood: {mood}</h3>
         <h4>Price: {price}</h4>
         <Purchase spoon={this.props.spoon} />
+        <AddToCart spoon={this.props.spoon} />
       </div>
     )
   }
