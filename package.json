@@ -22,6 +22,7 @@
     "kerberos": "0.0.17",
     "morgan": "^1.6.1",
     "serve-favicon": "~2.3.0",
+    "stripe": "^4.1.0",
     "webpack": "^1.12.9"
   },
   "jspm": {
@@ -29,6 +30,8 @@
       "baseURL": "public"
     },
     "dependencies": {
+      "events": "github:jspm/nodelibs-events@^0.1.1",
+      "flux": "npm:flux@^2.1.1",
       "jquery": "github:components/jquery@^2.1.4",
       "react": "npm:react@^0.14.3",
       "react-dom": "npm:react-dom@^0.14.3",
