@@ -13,23 +13,10 @@ class Item extends React.Component{
       <div className="item">
         <h2>{title}</h2>
         <h3>{price}</h3>
-        // <Purchase description={title} price={price} />
+        <Purchase description={title} price={price} />
       </div>
     )
   }
 }
 
 export default Item;
-// export default Relay.createContainer(Item, {
-//   fragments: {
-//     spoons: () => Relay.QL`
-//       fragment on Spoons {
-//         spoon{
-//           _id,
-//           title,
-//           price,
-//         }
-//       }
-//     `
-//   }
-// })

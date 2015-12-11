@@ -35,7 +35,7 @@
   },
   "jspm": {
     "directories": {
-      "baseURL": "public"
+      "baseURL": "js"
     },
     "dependencies": {
       "events": "github:jspm/nodelibs-events@^0.1.1",

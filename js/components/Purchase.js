@@ -41,9 +41,9 @@ class Purchase extends React.Component{
     });
     // Open Checkout with further options
     handler.open({
-      name: 'Demo Site',
+      name: this.props.description,
       description: '2 widgets',
-      amount: 2000
+      amount: this.props.price*100
     });
   }
   render(){
