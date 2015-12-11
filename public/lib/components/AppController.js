@@ -1,80 +1,13 @@
 import React from "react";
 
-import PaymentActions from '../actions/PaymentActions';
-import PaymentStore from '../stores/PaymentStore';
-
-
-let _returnConfirmation = () => {
-  return { charge: PaymentStore.returnConfirmation()}
-}
+import Purchase from './Purchase';
 
 class AppController extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = _returnConfirmation();
-    this._onChange = this._onChange.bind(this);
-  }
-
-  componentDidMount(){
-    PaymentStore.startListening(this._onChange);
-  }
-
-  componentWillUnmount(){
-    PaymentStore.stopListening(this._onChange);
-  }
-
-  _onChange() {
-    console.log('5. store emitted change event');
-    this.setState(_returnConfirmation());
-  }
-
-  handleClick(handler, e){
-    console.log('handler', handler, e);
-
-    e.preventDefault();
-    // Open Checkout with further options
-    handler.open({
-      name: 'Demo Site',
-      description: '2 widgets',
-      amount: 2000
-    });
-  }
   render(){
-    var handler = StripeCheckout.configure({
-      key: 'pk_test_XsChXUjkE5asWIozOmwkZRx6',
-      image: '/img/documentation/checkout/marketplace.png',
-      locale: 'auto',
-      token: function(token) {
-        // Use the token to create the charge with a server-side script.
-        // You can access the token ID with `token.id`
-        console.log('token', token);
-        // $.post('/', token)
-        //   .done(function(data){
-        //     console.log(data);
-        //   })
-        //   .fail(function(err){
-        //     console.error(err);
-        //   })
-        PaymentActions.makePayment(token);
-      }
-    });
-
-    var paymentConfirmation = this.state.charge;
-    var paid;
-    var amount;
-    var description;
-
-    if (this.state.charge){
-      paid = this.state.charge.paid;
-      amount = this.state.charge.amount;
-      description = this.state.charge.description;
-    }
-
     return(
       <div className="app">
         <h1>Hello World!</h1>
-        <button onClick={this.handleClick.bind(this, handler)}>Purchase</button>
-        <h4>Payment Confirmation: ${amount} paid for {description}</h4>
+        <Item />
       </div>
     )
   }
