@@ -1,3 +1,4 @@
+
 import {
   GraphQLSchema,
   GraphQLObjectType,
@@ -10,11 +11,21 @@ import {
   GraphQLBoolean
 } from 'graphql';
 
+import {
+  connectionArgs,
+  connectionDefinitions,
+  connectionFromArray,
+  fromGlobalId,
+  globalIdField,
+  mutationWithClientMutationId,
+  nodeDefinitions,
+} from 'graphql-relay';
+
 function idGen(){
   return Math.floor(Math.random()*Date.now())
-}
-
-let spoons = [
+};
+let store = {};
+store.spoons = [
   {
     _id: idGen(),
     title: 'Fat Spoon',
@@ -27,6 +38,14 @@ let spoons = [
   }
 ]
 
+var {nodeInterface, nodeField} = nodeDefinitions(
+  (globalId) => {
+    var {type, id} = fromGlobalId(globalId);
+  },
+  (obj) => {}
+);
+
+
 let spoonType = new GraphQLObjectType({
   name: 'Spoon',
   fields: () => ({
@@ -36,21 +55,40 @@ let spoonType = new GraphQLObjectType({
   })
 })
 
+let {connectionType: spoonConnection} =
+  connectionDefinitions({name: 'Spoon', nodeType: spoonType})
 
-let schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: ({
-      test: {
-        type: GraphQLString,
-        resolve: () => "Test"
+let storeType = new GraphQLObjectType({
+  name: 'Store',
+  fields: () => ({
+    id: globalIdField('Store'),
+    spoons: {
+      type: spoonConnection,
+      args: {
+        ...connectionArgs
       },
-      spoons: {
-        type: new GraphQLList(spoonType),
-        resolve: () => spoons
+      resolve: (obj, args) => {
+        return connectionFromArray(obj.spoons, args)
       }
-    })
+    }
   })
+})
+
+
+let queryType = new GraphQLObjectType({
+  name: 'Query',
+  fields: () => ({
+    node: nodeField,
+    store: {
+      type: storeType,
+      resolve: () => store
+    }
+  })
+})
+
+// let Schema = new GraphQLSchema({
+//   query: queryType
+// })
 
   // mutation: new GraphQLObjectType({
   //  name : 'Mutation',
@@ -61,6 +99,8 @@ let schema = new GraphQLSchema({
   //    }
   //  })
   // })
-});
+  //});
 
-export default schema;
+export var Schema = new GraphQLSchema({
+  query: queryType
+});

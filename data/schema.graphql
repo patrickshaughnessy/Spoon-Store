@@ -1,0 +1,36 @@
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  node(id: ID!): Node
+  store: Store
+}
+
+type Spoon {
+  _id: ID!
+  title: String
+  price: Float
+}
+
+type SpoonConnection {
+  pageInfo: PageInfo!
+  edges: [SpoonEdge]
+}
+
+type SpoonEdge {
+  node: Spoon
+  cursor: String!
+}
+
+type Store {
+  id: ID!
+  spoons(after: String, first: Int, before: String, last: Int): SpoonConnection
+}

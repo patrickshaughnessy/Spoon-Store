@@ -1,5 +1,15 @@
+import 'babel/polyfill';
+
+import AppController from "./components/AppController";
+import AppControllerRoute from './routes/AppControllerRoute'
 import React from "react";
 import ReactDOM from "react-dom";
-import AppController from "./components/AppController"
+import Relay from 'react-relay';
 
-ReactDOM.render(<AppController />, document.getElementById("react"));
+ReactDOM.render(
+  <Relay.RootContainer
+    Component={AppController}
+    route={new AppControllerRoute()}
+  />,
+  document.getElementById("react")
+);
