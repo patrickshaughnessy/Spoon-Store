@@ -12,7 +12,7 @@ class PaymentStore extends EventEmitter {
     AppDispatcher.register(action => {
       switch (action.actionType) {
         case ActionTypes.RECEIVE_PAYMENT:
-        console.log('inside store', action);
+        console.log('inside store', action.charge);
           _payment = action.charge
           this.emit('CHANGE');
           break

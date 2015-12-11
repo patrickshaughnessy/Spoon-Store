@@ -3,10 +3,10 @@ import React from "react";
 import Relay from 'react-relay';
 
 import Item from './Item';
+import Purchase from './Purchase';
 
 class AppController extends React.Component{
   render(){
-    console.log(this.props.store);
     return(
       <div className="app">
         <h1>Hello World!</h1>
@@ -22,12 +22,15 @@ export default Relay.createContainer(AppController, {
   fragments: {
     store: () => Relay.QL`
       fragment on Store {
-        spoons(first: 5) {
+        spoons(first: 10) {
           edges {
             node {
               _id
-              title
-              price
+              title,
+              price,
+              description,
+              mood,
+              type
             }
           }
         }

@@ -14,19 +14,23 @@ router.post('/api/charge', function(req, res, next) {
   // (Assuming you're using express - expressjs.com)
   // Get the credit card details submitted by the form
   var stripeToken = req.body.id;
+  var productId = req.body.productId;
+  var amount = req.body.amount;
 
   console.log('stripeToken', stripeToken)
   var charge = stripe.charges.create({
-    amount: 1000, // amount in cents, again
+    amount: amount*100, // amount in cents, again
     currency: "usd",
     source: stripeToken,
-    description: "Example charge"
+    description: "Your purchased spoon",
+
   }, function(err, charge) {
     console.log('err', err, 'charge', charge)
     if (err && err.type === 'StripeCardError') {
       // The card has been declined
       return res.send(err);
     }
+    charge.productId = productId;
     return res.send(charge);
   });
 });

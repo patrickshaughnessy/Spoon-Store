@@ -5,15 +5,15 @@ import Purchase from './Purchase';
 
 class Item extends React.Component{
   render(){
-    console.log(this.props.spoon);
-    var title = this.props.spoon.title;
-    var price = this.props.spoon.price;
-
+    let {title, description, price, mood, type} = this.props.spoon
     return(
       <div className="item">
-        <h2>{title}</h2>
-        <h3>{price}</h3>
-        <Purchase description={title} price={price} />
+        <h2>Title: {title}</h2>
+        <h3>Description: {description}</h3>
+        <h3>Type: {type}</h3>
+        <h3>Mood: {mood}</h3>
+        <h4>Price: {price}</h4>
+        <Purchase spoon={this.props.spoon} />
       </div>
     )
   }

@@ -15,11 +15,22 @@ import {
   connectionArgs,
   connectionDefinitions,
   connectionFromArray,
+  connectionFromPromisedArray,
   fromGlobalId,
   globalIdField,
   mutationWithClientMutationId,
   nodeDefinitions,
 } from 'graphql-relay';
+
+import {MongoClient} from "mongodb";
+let db;
+
+MongoClient.connect(process.env.MONGO_URL, (err, database) => {
+  if (err) throw err;
+
+  db = database;
+})
+
 
 function idGen(){
   return Math.floor(Math.random()*Date.now())
@@ -51,7 +62,10 @@ let spoonType = new GraphQLObjectType({
   fields: () => ({
     _id: { type: new GraphQLNonNull(GraphQLID)},
     title: { type: GraphQLString },
-    price: { type: GraphQLFloat }
+    price: { type: GraphQLFloat },
+    description: { type: GraphQLString },
+    type: { type: GraphQLString },
+    mood: { type: GraphQLString }
   })
 })
 
@@ -68,7 +82,7 @@ let storeType = new GraphQLObjectType({
         ...connectionArgs
       },
       resolve: (obj, args) => {
-        return connectionFromArray(obj.spoons, args)
+        return connectionFromPromisedArray(db.collection('spoons').find({}).toArray(), args)
       }
     }
   })

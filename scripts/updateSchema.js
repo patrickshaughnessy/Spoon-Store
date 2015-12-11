@@ -21,6 +21,7 @@ async () => {
     );
   }
 }();
+
 console.log(Schema);
 // Save user readable type system shorthand of schema
 fs.writeFileSync(

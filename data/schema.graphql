@@ -18,6 +18,9 @@ type Spoon {
   _id: ID!
   title: String
   price: Float
+  description: String
+  type: String
+  mood: String
 }
 
 type SpoonConnection {
