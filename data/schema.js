@@ -65,7 +65,8 @@ let spoonType = new GraphQLObjectType({
     price: { type: GraphQLFloat },
     description: { type: GraphQLString },
     type: { type: GraphQLString },
-    mood: { type: GraphQLString }
+    mood: { type: GraphQLString },
+    image: { type: GraphQLString }
   })
 })
 

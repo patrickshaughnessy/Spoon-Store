@@ -4,16 +4,19 @@ import Relay from 'react-relay';
 
 import Item from './Item';
 import ShoppingCart from './ShoppingCart';
+import Title from './Title';
 
 class AppController extends React.Component{
   render(){
     return(
       <div className="app">
-        <h1>Hello World!</h1>
+        <Title />
         <ShoppingCart />
-        {this.props.store.spoons.edges.map(spoon => {
-          return <Item key={spoon.node._id} spoon={spoon.node} />
-        })}
+        <div className="row">
+          {this.props.store.spoons.edges.map(spoon => {
+            return <Item key={spoon.node._id} spoon={spoon.node} />
+          })}
+        </div>
       </div>
     )
   }
@@ -31,7 +34,8 @@ export default Relay.createContainer(AppController, {
               price,
               description,
               mood,
-              type
+              type,
+              image
             }
           }
         }

@@ -8,7 +8,7 @@ let _returnConfirmation = () => {
   return { charge: PaymentStore.returnConfirmation()}
 }
 
-class Purchase extends React.Component{
+class PurchaseAllItems extends React.Component{
   constructor(props){
     super(props);
     this.state = _returnConfirmation();
@@ -24,43 +24,42 @@ class Purchase extends React.Component{
   }
 
   _onChange() {
-    console.log('5. store emitted change event', this.props.spoon._id, _returnConfirmation());
+    console.log('5. store emitted change event');
     let chargeId = _returnConfirmation().charge.productId;
-    if (this.props.spoon._id === chargeId){
+    if (chargeId === 'allspoons'){
+      localStorage.setItem('items', '');
+      setTimeout(() => {
+        location = location
+      }, 5);
       return this.setState(_returnConfirmation());
     }
   }
 
-  handleClick(spoon, e){
+  handleClick(amount, e){
     e.preventDefault();
-    var productId = spoon._id;
-    var amount = spoon.price;
-    var name = spoon.title;
-    var description = spoon.description;
-
+    var productId = 'allspoons'
     // it opens below this definition - bitches
     var handler = StripeCheckout.configure({
       key: 'pk_test_XsChXUjkE5asWIozOmwkZRx6',
-      image: spoon.image,
+      image: 'http://i0.kym-cdn.com/entries/icons/original/000/001/013/iamabananawd7.jpg',
       locale: 'auto',
       token: function(token) {
         // Use the token to create the charge with a server-side script.
-        token.productId = productId;
         token.amount = amount;
+        token.productId = productId
         PaymentActions.makePayment(token);
       }
     });
 
     // Open Checkout with further options
     handler.open({
-      name: name,
-      description: description,
+      name: 'Spoons',
+      description: 'My spoon is too big',
       amount: amount
     });
 
   }
   render(){
-    let {title, price, _id} = this.props.spoon
 
     var paymentConfirmation = this.state.charge;
 
@@ -68,13 +67,12 @@ class Purchase extends React.Component{
       return(
         <div className="purchase">
           <h3>Thank You!</h3>
-          <h4>Your payment of ${price} for {title} has been completed successfully</h4>
         </div>
       )
     } else {
       return(
         <div className="purchase">
-          <button onClick={this.handleClick.bind(this, this.props.spoon)}>Purchase</button>
+          <button onClick={this.handleClick.bind(this, this.props.amount)}>Purchase All Items</button>
         </div>
       )
     }
@@ -82,4 +80,4 @@ class Purchase extends React.Component{
   }
 }
 
-export default Purchase;
+export default PurchaseAllItems;

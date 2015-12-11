@@ -3,10 +3,14 @@ import Relay from 'react-relay';
 
 class AddToCart extends React.Component{
 
+  constructor(props){
+    super(props);
+  }
+
   addToCart(e){
     let items = localStorage.items ? JSON.parse(localStorage.items) : []
     console.log('items', items);
-    items.push(JSON.stringify(this.props.spoon));
+    items.push(this.props.spoon);
     localStorage.setItem('items', JSON.stringify(items));
   }
 

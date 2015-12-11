@@ -6,16 +6,23 @@ import AddToCart from './AddToCart';
 
 class Item extends React.Component{
   render(){
-    let {title, description, price, mood, type} = this.props.spoon
+    let {title, description, price, mood, type, image} = this.props.spoon
     return(
-      <div className="item">
-        <h2>Title: {title}</h2>
-        <h3>Description: {description}</h3>
-        <h3>Type: {type}</h3>
-        <h3>Mood: {mood}</h3>
-        <h4>Price: {price}</h4>
-        <Purchase spoon={this.props.spoon} />
-        <AddToCart spoon={this.props.spoon} />
+      <div className="item col-xs-4">
+        <div className="thumbnail">
+          <img src={image}></img>
+            <div className="caption">
+              <h3>{title}</h3>
+              <p>{description}</p>
+              <ul>
+                <li>Type: {type}</li>
+                <li>Mood: {mood}</li>
+              </ul>
+              <h4>Price: ${price}</h4>
+              <Purchase spoon={this.props.spoon} />
+              <AddToCart spoon={this.props.spoon} />
+            </div>
+        </div>
       </div>
     )
   }

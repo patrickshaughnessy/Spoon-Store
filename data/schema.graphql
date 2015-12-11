@@ -21,6 +21,7 @@ type Spoon {
   description: String
   type: String
   mood: String
+  image: String
 }
 
 type SpoonConnection {
