@@ -10,10 +10,18 @@
 <body>
   <div id="react"></div>
 
-  <script src="jspm_packages/system.js"></script>
+  <script type="text/javascript">
+    // Force `fetch` polyfill to workaround Chrome not displaying request body
+    // in developer tools for the native `fetch`.
+    self.fetch = null;
+  </script>
+  <script src="http://localhost:3000/webpack-dev-server.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- <script src="jspm_packages/system.js"></script>
   <script src="config.js"></script>
   <script>
     System.import('lib/main.js');
-  </script>
+  </script> -->
 </body>
 </html>
